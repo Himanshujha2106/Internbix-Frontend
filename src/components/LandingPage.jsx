@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ArrowRight, Briefcase, Users } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 
@@ -8,11 +8,10 @@ import { Link } from 'react-router-dom';
 const Button = ({ onClick, children, primary }) => (
   <button
     onClick={onClick}
-    className={`px-6 py-3 rounded-full text-lg font-semibold transition-colors duration-200 ${
-      primary
+    className={`px-6 py-3 rounded-full text-lg font-semibold transition-colors duration-200 ${primary
         ? 'bg-primary text-white hover:bg-primary-dark'
         : 'bg-white text-primary border-2 border-primary hover:bg-gray-100'
-    }`}
+      }`}
   >
     {children}
   </button>
@@ -29,17 +28,21 @@ const FeatureCard = ({ icon: Icon, title, description }) => (
 );
 
 export default function LandingPage() {
-  const [selectedRole, setSelectedRole] = useState(null);
-
+  const navigate = useNavigate();
   const handleRoleSelect = (role) => {
-    setSelectedRole(role);
     // Here you would typically redirect to a different page or show different content
+    if (role === "employer")
+      navigate('/homeemployer')
+    else {
+
+      navigate("/home")
+    }
     console.log(`Selected role: ${role}`);
   };
 
   return (
     <div className="min-h-screen flex flex-col">
-      
+
 
       <main className="flex-grow">
         <section className="bg-gradient-to-b from-blue-50 to-white py-20">
@@ -64,7 +67,7 @@ export default function LandingPage() {
 
         <section id="features" className="py-20 bg-gray-50">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold text-center mb-12">Why Choose JobConnect?</h2>
+            <h2 className="text-3xl font-bold text-center mb-12">Why Choose Internbix?</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <FeatureCard
                 icon={Users}
@@ -86,7 +89,7 @@ export default function LandingPage() {
         </section>
       </main>
 
-     
+
     </div>
   );
 }

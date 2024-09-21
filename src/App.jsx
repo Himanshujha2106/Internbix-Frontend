@@ -9,6 +9,7 @@ import Navbar from './components/Navbar.jsx'
 import Footer from './components/Footer.jsx'
 
 
+import EmployerJobPosting from './components/EmployerJobPosting.jsx';
 function App() {
 
   return (
@@ -19,9 +20,13 @@ function App() {
 
             <Navbar/>
           <Routes>
-            <Route path="/" element={<Home />} />
+
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/homeemployer" element={<EmployerJobPosting />} />
+            <Route path="/home" element={<Home />} />
             <Route path="/aboutus" element={<AboutUs />} />
             <Route path="/landing" element={<LandingPage />} />
+            
           </Routes>
           <Footer/>
         </Router>

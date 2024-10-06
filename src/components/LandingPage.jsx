@@ -31,12 +31,12 @@ export default function LandingPage() {
   const navigate = useNavigate();
   const handleRoleSelect = (role) => {
     // Here you would typically redirect to a different page or show different content
-    if (role === "employer")
-      navigate('/homeemployer')
-    else {
+    // if (role === "employer")
+    //   navigate('/homeemployer')
+    // else {
 
-      navigate("/home")
-    }
+      navigate("/login")
+    
     console.log(`Selected role: ${role}`);
   };
 

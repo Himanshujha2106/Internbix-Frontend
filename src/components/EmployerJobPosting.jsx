@@ -1,13 +1,6 @@
 import React, { useState } from 'react';
-import { Save, ArrowLeft, Briefcase, MapPin, DollarSign, Clock, Calendar } from 'lucide-react';
-
-const Logo = () => (
-  <svg className="w-10 h-10 text-primary" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-    <path d="M2 17L12 22L22 17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-    <path d="M2 12L12 17L22 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>
-);
+import { Save, Briefcase, MapPin, DollarSign, Clock, Calendar } from 'lucide-react';
+import { postJob } from '../api'; // Import postJob from api.js
 
 const InputField = ({ label, id, type = "text", placeholder, value, onChange, icon: Icon }) => (
   <div className="mb-4">
@@ -44,84 +37,68 @@ const TextAreaField = ({ label, id, placeholder, value, onChange }) => (
 
 export default function EmployerJobPosting() {
   const [jobData, setJobData] = useState({
-    title: '',
-    company: '',
-    location: '',
-    salary: '',
-    jobType: '',
-    startDate: '',
+    jobTitle: '',
     description: '',
+    applicationLink: '',
+    dateOfRelease: Math.floor(Date.now() / 1000), // Current timestamp in seconds
+    applicationOpenTill: '', // To be set by user
+    experience: '',
+    location: '',
   });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(null);
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
-    setJobData(prevData => ({
+    setJobData((prevData) => ({
       ...prevData,
       [id]: value
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Here you would typically send the data to your backend
-    console.log('Job Data Submitted:', jobData);
-    // You could also add validation here before submitting
+    setLoading(true);
+    setError(null);
+    setSuccess(null);
+
+    try {
+      // Format the job data as required
+      const formattedData = {
+        jobTitle: jobData.jobTitle,
+        description: jobData.description,
+        applicationLink: jobData.applicationLink,
+        dateOfRelease: jobData.dateOfRelease,
+        applicationOpenTill: jobData.applicationOpenTill,
+        experience: jobData.experience,
+        location: jobData.location,
+      };
+
+      // Call the API to post the job
+      await postJob(formattedData);
+      setSuccess('Job posted successfully!');
+    } catch (err) {
+      setError('Failed to post the job. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="min-h-screen bg-gray-50">
-      
-
       <main className="max-w-3xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-8">Post a New Job</h1>
         <form onSubmit={handleSubmit} className="bg-white shadow-md rounded-lg p-6">
+          {error && <p className="text-red-500 mb-4">{error}</p>}
+          {success && <p className="text-green-500 mb-4">{success}</p>}
           <InputField
             label="Job Title"
-            id="title"
+            id="jobTitle"
             placeholder="e.g. Senior Software Engineer"
-            value={jobData.title}
+            value={jobData.jobTitle}
             onChange={handleInputChange}
             icon={Briefcase}
-          />
-          <InputField
-            label="Company Name"
-            id="company"
-            placeholder="Your Company Name"
-            value={jobData.company}
-            onChange={handleInputChange}
-            icon={Briefcase}
-          />
-          <InputField
-            label="Location"
-            id="location"
-            placeholder="e.g. New York, NY or Remote"
-            value={jobData.location}
-            onChange={handleInputChange}
-            icon={MapPin}
-          />
-          <InputField
-            label="Salary Range"
-            id="salary"
-            placeholder="e.g. $80,000 - $120,000"
-            value={jobData.salary}
-            onChange={handleInputChange}
-            icon={DollarSign}
-          />
-          <InputField
-            label="Job Type"
-            id="jobType"
-            placeholder="e.g. Full-time, Part-time, Contract"
-            value={jobData.jobType}
-            onChange={handleInputChange}
-            icon={Clock}
-          />
-          <InputField
-            label="Start Date"
-            id="startDate"
-            type="date"
-            value={jobData.startDate}
-            onChange={handleInputChange}
-            icon={Calendar}
           />
           <TextAreaField
             label="Job Description"
@@ -130,19 +107,62 @@ export default function EmployerJobPosting() {
             value={jobData.description}
             onChange={handleInputChange}
           />
+          <InputField
+            label="Application Link"
+            id="applicationLink"
+            placeholder="Link for applicants to apply"
+            value={jobData.applicationLink}
+            onChange={handleInputChange}
+            icon={Briefcase}
+          />
+          <InputField
+            label="Experience Required"
+            id="experience"
+            placeholder="e.g. 2-3 years"
+            value={jobData.experience}
+            onChange={handleInputChange}
+            icon={Clock}
+          />
+          <InputField
+            label="Location"
+            id="location"
+            placeholder="e.g. Kolkata"
+            value={jobData.location}
+            onChange={handleInputChange}
+            icon={MapPin}
+          />
+          <InputField
+            label="Date of Release"
+            id="dateOfRelease"
+            type="date"
+            value={new Date(jobData.dateOfRelease * 1000).toISOString().split('T')[0]} // Convert timestamp to date string
+            onChange={handleInputChange}
+            icon={Calendar}
+          />
+          <InputField
+            label="Application Open Till"
+            id="applicationOpenTill"
+            type="date"
+            value={jobData.applicationOpenTill}
+            onChange={handleInputChange}
+            icon={Calendar}
+          />
           <div className="mt-6">
             <button
               type="submit"
               className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+              disabled={loading}
             >
-              <Save className="h-5 w-5 mr-2" />
-              Post Job
+              {loading ? 'Posting Job...' : (
+                <>
+                  <Save className="h-5 w-5 mr-2" />
+                  Post Job
+                </>
+              )}
             </button>
           </div>
         </form>
       </main>
-
-      
     </div>
   );
 }

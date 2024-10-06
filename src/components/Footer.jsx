@@ -41,7 +41,7 @@ const Footer = () => {
           <div className="w-full md:w-1/4 mb-6 md:mb-0">
             <h3 className="text-lg font-semibold mb-4">Contact Us</h3>
             <p className="mb-2">Mumbai, India, 400001</p>
-            <p className="mb-2">Phone: (+91) 96088-73200</p>
+            <p className="mb-2">Phone: (+91) 96088-99999</p>
             <p>Email: <a href="mailto:info@internbix.com" className="hover:underline">info@internbix.com</a></p>
           </div>
 

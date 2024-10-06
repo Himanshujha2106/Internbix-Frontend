@@ -3,8 +3,8 @@ import { useState } from 'react'
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 
 import Home from './components/Home';
-import AboutUs from './components/Aboutus';
-import LandingPage from './components/LandingPage';
+import AboutUs from './components/Aboutus.jsx';
+import LandingPage from './components/LandingPage.jsx';
 import Navbar from './components/Navbar.jsx'
 import Footer from './components/Footer.jsx'
 

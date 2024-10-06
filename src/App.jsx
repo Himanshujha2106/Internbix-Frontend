@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 
 import Home from './components/Home';
-import AboutUs from './components/Aboutus';
+// import AboutUs from './components/Aboutus';
 import LandingPage from './components/LandingPage';
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
@@ -26,7 +26,7 @@ function App() {
             <Route path="/" element={<LandingPage />} />
             <Route path="/homeemployer" element={<EmployerJobPosting />} />
             <Route path="/home" element={<Home />} />
-            <Route path="/aboutus" element={<AboutUs />} />
+            {/* <Route path="/aboutus" element={<AboutUs />} /> */}
             <Route path="/landing" element={<LandingPage />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // Base URL for your APIs
-const BASE_URL = 'http://internbix.ap-south-1.elasticbeanstalk.com';
+const BASE_URL = 'https://api.internbix.com';
 
 // Register user
 export const registerUser = async (userData) => {

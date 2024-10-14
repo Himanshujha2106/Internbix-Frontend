@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { loginUser } from '../api'; // Import loginUser from api.js
 
@@ -8,6 +8,11 @@ export default function Login() {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+    useEffect(() => {
+        if (localStorage.getItem('token')) {
+            navigate('/home');
+        }
+    }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -16,10 +21,12 @@ export default function Login() {
 
         try {
             const response = await loginUser({ email, password }); // Call the login API from api.js
-            const { token } = response.data; // Assuming the token is returned in response.data
+            const token  = response.data; // Assuming the token is returned in response.data
             localStorage.setItem('token', token); // Store token in localStorage
             setLoading(false); // Turn off loading state
+            
             navigate('/home'); // Redirect to dashboard
+            window.location.reload();
         } catch (err) {
             setLoading(false); // Turn off loading state
             setError(err.response?.data?.message || 'Invalid login credentials'); // Show error message

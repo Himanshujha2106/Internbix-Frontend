@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Search } from 'lucide-react';
 import Dropdown from './Dropdown';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Logo from './Logo';
 
 const NavLink = ({ href, children }) => (
@@ -9,6 +9,24 @@ const NavLink = ({ href, children }) => (
 );
 
 export default function Navbar() {
+    const [isLoggedin, setIsLoggedin] = useState(false);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (localStorage.getItem('token')) {
+            setIsLoggedin(true);
+        }
+    }, []);
+
+    const handleLogout = () => {
+        // Clear the token from localStorage
+        localStorage.removeItem('token');
+        setIsLoggedin(false);
+
+        // Redirect to login or home
+        navigate('/login');
+    };
+
     const blogDropdownItems = [
         { label: 'Interview Q/A', href: '/about/our-story' },
         { label: 'Blogs', href: '/about/team' },
@@ -31,13 +49,8 @@ export default function Navbar() {
     return (
         <header className="bg-white shadow-md">
             <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-
-                <Link to="/" className="flex items-center ">
-                    
-                    
+                <Link to="/" className="flex items-center">
                     <Logo />
-
-                  
                 </Link>
                 <nav className="hidden md:flex space-x-6">
                     <NavLink href="/">Home</NavLink>
@@ -45,8 +58,19 @@ export default function Navbar() {
                     <Dropdown title="Resume Review" items={resumeDropdownItems} />
                     <Dropdown title="Blogs" items={blogDropdownItems} />
                     <NavLink href="/aboutus">About Us</NavLink>
+                    <Link to="/homeemployer" className="hidden md:flex space-x-6">
+                        Post a Job
+                    </Link>
                 </nav>
 
+                {isLoggedin && (
+                    <button
+                        onClick={handleLogout}
+                        className="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600"
+                    >
+                        Logout
+                    </button>
+                )}
                 <form onSubmit={(e) => e.preventDefault()} className="relative">
                     <input
                         type="text"

@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Base URL for your APIs
 const BASE_URL = 'https://api.internbix.com';
-
+const token=localStorage.getItem('token')
 // Register user
 export const registerUser = async (userData) => {
   const config = {
@@ -47,7 +47,7 @@ export const getAllJobs = async (date) => {
 export const getVerifiedJobs = async (date) => {
   const config = {
     headers: {
-      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI5MDA1ZW1haWxAZ21haWwuY29tIiwiaWF0IjoxNzI4MDM5NjIzfQ.o-2Qsj2q0Qw_Z1gAyZa1JRNNZj5fPGrKi1gVELV-dzE'
+      'Authorization': `Bearer ${token}`
     }
   };
   return await axios.post(`${BASE_URL}/job/get/verified-jobs`, { jobsAvailableDate: date }, config);
@@ -57,7 +57,8 @@ export const getVerifiedJobs = async (date) => {
 export const postJob = async (jobData) => {
   const config = {
     headers: {
-      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI5MDA1ZW1haWxAZ21haWwuY29tIiwiaWF0IjoxNzI4MDM5NjIzfQ.o-2Qsj2q0Qw_Z1gAyZa1JRNNZj5fPGrKi1gVELV-dzE'
+      'Authorization': `Bearer ${token}`
+
     }
   };
   return await axios.post(`${BASE_URL}/job/post`, jobData, config);

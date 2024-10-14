@@ -31,10 +31,14 @@ export default function Navbar() {
     return (
         <header className="bg-white shadow-md">
             <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-                <Link to="/" className="flex items-center">
-                    <Logo />
-                </Link>
 
+                <Link to="/" className="flex items-center ">
+                    
+                    
+                    <Logo />
+
+                  
+                </Link>
                 <nav className="hidden md:flex space-x-6">
                     <NavLink href="/">Home</NavLink>
                     <Dropdown title="Jobs" items={jobDropdownItems} />

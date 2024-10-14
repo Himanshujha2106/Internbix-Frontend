@@ -102,7 +102,7 @@ export default function Home() {
 
 // API Function to get all jobs
 const getAllJobs = async (jobsAvailableDate) => {
-  const response = await fetch('http://internbix.ap-south-1.elasticbeanstalk.com/job/get-all-jobs', {
+  const response = await fetch('https://api.internbix.com/job/get-all-jobs', {
     method: 'POST',
     headers: {
       'X-API-KEY': 'reg@123',

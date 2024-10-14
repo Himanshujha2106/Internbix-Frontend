@@ -57,7 +57,7 @@ export const getVerifiedJobs = async (date) => {
 export const postJob = async (jobData) => {
   const config = {
     headers: {
-      'Authorization': `Bearer ${token}`
+      'Authorization': `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI5MDA1ZW1haWxAZ21haWwuY29tIiwiaWF0IjoxNzI4MDM5NjIzfQ.o-2Qsj2q0Qw_Z1gAyZa1JRNNZj5fPGrKi1gVELV-dzE`
 
     }
   };

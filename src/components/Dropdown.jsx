@@ -5,7 +5,6 @@ const Dropdown = ({ title, items }) => {
 
   const handleMouseEnter = () => setIsOpen(true);
   const handleMouseLeave = () => setIsOpen(false);
-  const handleClick = () => setIsOpen(!isOpen);
 
   return (
     <div
@@ -13,22 +12,19 @@ const Dropdown = ({ title, items }) => {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      {/* Dropdown trigger */}
       <button
-        className="text-gray-600 hover:text-gray-900 focus:outline-none"
-        onClick={handleClick}
+        className="text-gray-800 hover:text-gray-900 font-semibold focus:outline-none relative z-10 transition-colors duration-300"
       >
         {title}
       </button>
 
-      {/* Dropdown Menu */}
       {isOpen && (
-        <ul className="absolute left-0 bg-white border border-gray-300 rounded-lg shadow-lg  overflow-y-auto">
+        <ul className="absolute left-0 top-full mt-[-4px] w-56 bg-white border border-gray-200 rounded-xl shadow-lg z-20 transition-all duration-300 ease-in-out transform scale-100">
           {items.map((item) => (
-            <li key={item.label} className=" hover:bg-gray-100">
+            <li key={item.label} className="hover:bg-primary hover:bg-opacity-10">
               <a
                 href={item.href}
-                className="block px-1 py-1 text-gray-700 hover:text-gray-900"
+                className="block py-2 text-gray-700 text-center transition duration-200 ease-in-out"
               >
                 {item.label}
               </a>

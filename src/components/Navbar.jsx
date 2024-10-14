@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Logo from './Logo';
 
 const NavLink = ({ href, children }) => (
-    <Link to={href} className="text-gray-600 hover:text-gray-900">{children}</Link>
+    <Link to={href} className="text-gray-700 hover:text-gray-900 font-semibold focus:outline-none">{children}</Link>
 );
 
 export default function Navbar() {
@@ -57,9 +57,9 @@ export default function Navbar() {
                     <Dropdown title="Jobs" items={jobDropdownItems} />
                     <Dropdown title="Resume Review" items={resumeDropdownItems} />
                     <Dropdown title="Blogs" items={blogDropdownItems} />
-                    <NavLink href="/aboutus">About Us</NavLink>
-                    <Link to="/homeemployer" className="hidden md:flex space-x-6">
-                        Post a Job
+                    <NavLink  href="/aboutus">About Us</NavLink>
+                    <Link to="/homeemployer" className="hidden md:flex space-x-6 text-gray-700 hover:text-gray-900 font-semibold focus:outline-none">
+                        Jobpost
                     </Link>
                 </nav>
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Save, Briefcase, MapPin, DollarSign, Clock, Calendar } from 'lucide-react';
+import { Save, Briefcase, MapPin, Clock, Calendar } from 'lucide-react';
 import { postJob } from '../api'; // Import postJob from api.js
 
 const InputField = ({ label, id, type = "text", placeholder, value, onChange, icon: Icon }) => (
@@ -57,6 +57,14 @@ export default function EmployerJobPosting() {
     }));
   };
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -69,8 +77,8 @@ export default function EmployerJobPosting() {
         jobTitle: jobData.jobTitle,
         description: jobData.description,
         applicationLink: jobData.applicationLink,
-        dateOfRelease: jobData.dateOfRelease,
-        applicationOpenTill: jobData.applicationOpenTill,
+        dateOfRelease: formatDate(jobData.dateOfRelease),
+        applicationOpenTill: formatDate(jobData.applicationOpenTill),
         experience: jobData.experience,
         location: jobData.location,
       };

@@ -102,12 +102,14 @@ export default function Home() {
 
 // API Function to get all jobs
 const getAllJobs = async (jobsAvailableDate) => {
-  const response = await fetch('https://api.internbix.com/job/get-all-jobs', {
+  const response = await fetch('https://api.internbix.com/job/get/verified-jobs', {
     method: 'POST',
     headers: {
-      'X-API-KEY': 'reg@123',
       'Content-Type': 'application/json',
+      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI5MDA1ZW1haWxAZ21haWwuY29tIiwiaWF0IjoxNzI4MDM5NjIzfQ.o-2Qsj2q0Qw_Z1gAyZa1JRNNZj5fPGrKi1gVELV-dzE'
+
     },
+    
     body: JSON.stringify({ jobsAvailableDate }),
   });
 
